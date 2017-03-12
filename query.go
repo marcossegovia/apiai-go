@@ -27,7 +27,7 @@ type Query struct {
 	Query           []string            `json:"query"`
 	Event           Event               `json:"event"`
 	Version         string              `json:"-"`
-	SessionId       string              `json:"sessionId"`
+	SessionId       string              `json:"SessionId"`
 	Language        string              `json:"lang"`
 	Contexts        []Context           `json:"contexts"`
 	ResetContexts   bool                `json:"resetContexts"`
@@ -95,13 +95,13 @@ type QueryResponse struct {
 	Language  string    `json:"lang"`
 	Result    Result    `json:"result"`
 	Status    Status    `json:"status"`
-	SessionId string    `json:"sessionId"`
+	SessionId string    `json:"SessionId"`
 }
 
 func (c *ApiClient) Query(q Query) (*QueryResponse, error) {
-	q.Version = c.config.version
-	q.SessionId = c.config.sessionId
-	q.Language = c.config.queryLang
+	q.Version = c.config.Version
+	q.SessionId = c.config.SessionId
+	q.Language = c.config.QueryLang
 	body := new(bytes.Buffer)
 	err := json.NewEncoder(body).Encode(q)
 
@@ -114,7 +114,7 @@ func (c *ApiClient) Query(q Query) (*QueryResponse, error) {
 		return nil, err
 	}
 	req.Header.Set("Content-type", "application/json, charset=utf-8")
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)

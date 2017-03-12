@@ -76,7 +76,7 @@ func (c *ApiClient) GetIntents() ([]IntentDescription, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -104,7 +104,7 @@ func (c *ApiClient) GetIntent(id string) (*Intent, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -138,7 +138,7 @@ func (c *ApiClient) CreateIntent(intent Intent) (*CreationResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -172,7 +172,7 @@ func (c *ApiClient) UpdateIntent(id string, intent Intent) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -194,7 +194,7 @@ func (c *ApiClient) DeleteIntent(id string) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)

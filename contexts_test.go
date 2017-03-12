@@ -11,7 +11,7 @@ import (
 )
 
 func TestGetContexts(t *testing.T) {
-	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -110,7 +110,7 @@ func TestGetContexts(t *testing.T) {
 
 	for _, tc := range tests {
 		httpmock.RegisterResponder("GET", c.buildUrl("contexts", map[string]string{
-			"sessionId": c.config.sessionId,
+			"SessionId": c.config.SessionId,
 		}), tc.responder)
 
 		r, err := c.GetContexts()
@@ -123,7 +123,7 @@ func TestGetContexts(t *testing.T) {
 }
 
 func TestGetContext(t *testing.T) {
-	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -192,7 +192,7 @@ func TestGetContext(t *testing.T) {
 
 	for _, tc := range tests {
 		httpmock.RegisterResponder("GET", c.buildUrl("contexts/"+url.QueryEscape("Coffee time"), map[string]string{
-			"sessionId": c.config.sessionId,
+			"SessionId": c.config.SessionId,
 		}), tc.responder)
 
 		r, err := c.GetContext("Coffee time")
@@ -205,7 +205,7 @@ func TestGetContext(t *testing.T) {
 }
 
 func TestCreateContext(t *testing.T) {
-	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -232,7 +232,7 @@ func TestCreateContext(t *testing.T) {
 
 	for _, tc := range tests {
 		httpmock.RegisterResponder("POST", c.buildUrl("contexts", map[string]string{
-			"sessionId": c.config.sessionId,
+			"SessionId": c.config.SessionId,
 		}), tc.responder)
 
 		err := c.CreateContext(Context{
@@ -264,7 +264,7 @@ func TestCreateContext(t *testing.T) {
 }
 
 func TestDeleteContexts(t *testing.T) {
-	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -290,7 +290,7 @@ func TestDeleteContexts(t *testing.T) {
 
 	for _, tc := range tests {
 		httpmock.RegisterResponder("DELETE", c.buildUrl("contexts", map[string]string{
-			"sessionId": c.config.sessionId,
+			"SessionId": c.config.SessionId,
 		}), tc.responder)
 
 		err := c.DeleteContexts()
@@ -302,7 +302,7 @@ func TestDeleteContexts(t *testing.T) {
 }
 
 func TestDeleteContext(t *testing.T) {
-	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -328,7 +328,7 @@ func TestDeleteContext(t *testing.T) {
 
 	for _, tc := range tests {
 		httpmock.RegisterResponder("DELETE", c.buildUrl("contexts/"+url.QueryEscape("Coffee time"), map[string]string{
-			"sessionId": c.config.sessionId,
+			"SessionId": c.config.SessionId,
 		}), tc.responder)
 
 		err := c.DeleteContext("Coffee time")

@@ -32,7 +32,7 @@ func (c *ApiClient) GetEntities() ([]EntityDescription, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -60,7 +60,7 @@ func (c *ApiClient) GetEntity(idOrName string) (*Entity, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -94,7 +94,7 @@ func (c *ApiClient) CreateEntity(entity Entity) (*CreationResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -128,7 +128,7 @@ func (c *ApiClient) AddEntries(idOrName string, entries []Entry) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -156,7 +156,7 @@ func (c *ApiClient) UpdateEntities(entities []Entity) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -184,7 +184,7 @@ func (c *ApiClient) UpdateEntity(idOrName string, entity Entity) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -212,7 +212,7 @@ func (c *ApiClient) UpdateEntries(idOrName string, entries []Entry) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -234,7 +234,7 @@ func (c *ApiClient) DeleteEntity(idOrName string) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)
@@ -261,7 +261,7 @@ func (c *ApiClient) DeleteEntries(idOrName string, entries []string) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.config.token)
+	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
 	resp, err := httpClient.Do(req)

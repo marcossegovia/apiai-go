@@ -11,7 +11,7 @@ import (
 )
 
 func TestQuery(t *testing.T) {
-	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -59,7 +59,7 @@ func TestQuery(t *testing.T) {
     "code": 200,
     "errorType": "success"
   },
-  "sessionId": "123454321"
+  "SessionId": "123454321"
 }`),
 			expectedResponse: &QueryResponse{
 				Id:        "b340a1f7-abee-4e13-9bdd-5e8938a48b7d",

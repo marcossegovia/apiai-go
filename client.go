@@ -14,11 +14,11 @@ var queryLang = []string{"pt-BR", "zh-HK", "zh-CN", "zh-TW", "en", "nl", "fr", "
 var speechLang = []string{"en-US", "en-AU", "en-CA", "en-GB", "en-IN", "ru-RU", "de-DE", "es-ES", "pt-PT", "pt-BR", "zh-CN", "zh-TW", "zh-HK", "ja-JP", "fr-FR"}
 
 type ClientConfig struct {
-	token      string //a9a9a9a9a9a9aa9a9a9a9a9a9a9a9a9a
-	sessionId  string
-	version    string //YYYYMMDD
-	queryLang  string
-	speechLang string
+	Token      string //a9a9a9a9a9a9aa9a9a9a9a9a9a9a9a9a
+	SessionId  string
+	Version    string //YYYYMMDD
+	QueryLang  string
+	SpeechLang string
 }
 
 type ApiClient struct {
@@ -50,28 +50,28 @@ type Client interface {
 }
 
 func NewClient(conf *ClientConfig) (*ApiClient, error) {
-	if conf.token == "" {
-		return nil, fmt.Errorf("%v", "You have to provide a token")
+	if conf.Token == "" {
+		return nil, fmt.Errorf("%v", "You have to provide a Token")
 	}
-	if conf.sessionId == "" {
+	if conf.SessionId == "" {
 		return nil, fmt.Errorf("%v", "You have to provide a session id")
 	}
-	if len(conf.sessionId) > 36 {
+	if len(conf.SessionId) > 36 {
 		return nil, fmt.Errorf("%v", "You have to provide a valid session id, no longer than 36 symbols")
 	}
-	if conf.version == "" {
-		conf.version = defaultVersion
+	if conf.Version == "" {
+		conf.Version = defaultVersion
 	}
-	if conf.queryLang == "" {
-		conf.queryLang = defaultQueryLang
+	if conf.QueryLang == "" {
+		conf.QueryLang = defaultQueryLang
 	}
-	if conf.speechLang == "" {
-		conf.speechLang = defaultSpeechLang
+	if conf.SpeechLang == "" {
+		conf.SpeechLang = defaultSpeechLang
 	}
-	if !languageAvailable(conf.queryLang, queryLang) {
+	if !languageAvailable(conf.QueryLang, queryLang) {
 		return nil, fmt.Errorf("%v", "You have to provide a valid query language, see https://docs.api.ai/docs/languages")
 	}
-	if !languageAvailable(conf.speechLang, speechLang) {
+	if !languageAvailable(conf.SpeechLang, speechLang) {
 		return nil, fmt.Errorf("%v", "You have to provide a valid speech language, see https://docs.api.ai/docs/tts#headers")
 	}
 
@@ -88,7 +88,7 @@ func languageAvailable(inputLang string, languages []string) bool {
 }
 
 func (c *ApiClient) buildUrl(endpoint string, params map[string]string) string {
-	u := baseUrl + endpoint + "?v=" + c.config.version
+	u := baseUrl + endpoint + "?v=" + c.config.Version
 	if params != nil {
 		for i, v := range params {
 			u += "&" + i + "=" + url.QueryEscape(v)
