@@ -1,30 +1,30 @@
 package apiai
 
 import (
-        "fmt"
-        "testing"
-        "net/http"
-        "net/url"
+	"fmt"
+	"net/http"
+	"net/url"
+	"testing"
 
-        "github.com/jarcoal/httpmock"
-        "github.com/stretchr/testify/assert"
+	"github.com/jarcoal/httpmock"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetContexts(t *testing.T) {
-        var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
-        assert := assert.New(t)
-        httpmock.Activate()
-        defer httpmock.DeactivateAndReset()
+	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	assert := assert.New(t)
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
 
-        tests := []struct {
-                description      string
-                responder        httpmock.Responder
-                expectedResponse []Context
-                expectedError    error
-        }{
-                {
-                        description: "api ai success, no errors",
-                        responder: httpmock.NewStringResponder(200, `[
+	tests := []struct {
+		description      string
+		responder        httpmock.Responder
+		expectedResponse []Context
+		expectedError    error
+	}{
+		{
+			description: "api ai success, no errors",
+			responder: httpmock.NewStringResponder(200, `[
 {
   "name": "Play game",
   "parameters": [
@@ -60,80 +60,80 @@ func TestGetContexts(t *testing.T) {
   ]
 }
 ]`),
-                        expectedResponse: []Context{
-                                {
-                                        Name: "Play game",
-                                        Params: []ContextParameter{
-                                                {
-                                                        Name:  "option-1",
-                                                        Value: "yes",
-                                                },
-                                                {
-                                                        Name:  "option-2",
-                                                        Value: "no",
-                                                },
-                                        },
-                                },
-                                {
-                                        Name: "Coffee time",
-                                        Params: []ContextParameter{
-                                                {
-                                                        Name:  "type-1",
-                                                        Value: "long",
-                                                },
-                                                {
-                                                        Name:  "type-2",
-                                                        Value: "short",
-                                                },
-                                                {
-                                                        Name:  "temperature-1",
-                                                        Value: "hot",
-                                                },
-                                                {
-                                                        Name:  "temperature-2",
-                                                        Value: "cold",
-                                                },
-                                        },
-                                },
-                        },
-                        expectedError: nil,
-                }, {
-                        description:      "api ai failed with an error 400",
-                        responder:        httpmock.NewStringResponder(http.StatusBadRequest, `{}`),
-                        expectedResponse: nil,
-                        expectedError:    fmt.Errorf("apiai: wops something happens because status code is 400"),
-                },
-        }
+			expectedResponse: []Context{
+				{
+					Name: "Play game",
+					Params: []ContextParameter{
+						{
+							Name:  "option-1",
+							Value: "yes",
+						},
+						{
+							Name:  "option-2",
+							Value: "no",
+						},
+					},
+				},
+				{
+					Name: "Coffee time",
+					Params: []ContextParameter{
+						{
+							Name:  "type-1",
+							Value: "long",
+						},
+						{
+							Name:  "type-2",
+							Value: "short",
+						},
+						{
+							Name:  "temperature-1",
+							Value: "hot",
+						},
+						{
+							Name:  "temperature-2",
+							Value: "cold",
+						},
+					},
+				},
+			},
+			expectedError: nil,
+		}, {
+			description:      "api ai failed with an error 400",
+			responder:        httpmock.NewStringResponder(http.StatusBadRequest, `{}`),
+			expectedResponse: nil,
+			expectedError:    fmt.Errorf("apiai: wops something happens because status code is 400"),
+		},
+	}
 
-        for _, tc := range tests {
-                httpmock.RegisterResponder("GET", c.buildUrl("contexts", map[string]string{
-                        "sessionId": c.config.sessionId,
-                }), tc.responder)
+	for _, tc := range tests {
+		httpmock.RegisterResponder("GET", c.buildUrl("contexts", map[string]string{
+			"sessionId": c.config.sessionId,
+		}), tc.responder)
 
-                r, err := c.GetContexts()
+		r, err := c.GetContexts()
 
-                assert.Equal(r, tc.expectedResponse, tc.description)
-                assert.Equal(err, tc.expectedError, tc.description)
+		assert.Equal(r, tc.expectedResponse, tc.description)
+		assert.Equal(err, tc.expectedError, tc.description)
 
-                httpmock.Reset()
-        }
+		httpmock.Reset()
+	}
 }
 
 func TestGetContext(t *testing.T) {
-        var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
-        assert := assert.New(t)
-        httpmock.Activate()
-        defer httpmock.DeactivateAndReset()
+	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	assert := assert.New(t)
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
 
-        tests := []struct {
-                description      string
-                responder        httpmock.Responder
-                expectedResponse *Context
-                expectedError    error
-        }{
-                {
-                        description: "api ai success, no errors",
-                        responder: httpmock.NewStringResponder(200, `{
+	tests := []struct {
+		description      string
+		responder        httpmock.Responder
+		expectedResponse *Context
+		expectedError    error
+	}{
+		{
+			description: "api ai success, no errors",
+			responder: httpmock.NewStringResponder(200, `{
   "name": "Coffee time",
   "parameters": [
     {
@@ -154,172 +154,172 @@ func TestGetContext(t *testing.T) {
     }
   ]
 }`),
-                        expectedResponse: &Context{
-                                Name: "Coffee time",
-                                Params: []ContextParameter{
-                                        {
-                                                Name:  "type-1",
-                                                Value: "long",
-                                        },
-                                        {
-                                                Name:  "type-2",
-                                                Value: "short",
-                                        },
-                                        {
-                                                Name:  "temperature-1",
-                                                Value: "hot",
-                                        },
-                                        {
-                                                Name:  "temperature-2",
-                                                Value: "cold",
-                                        },
-                                },
-                        },
-                        expectedError: nil,
-                }, {
-                        description:      "api ai failed with an error 400",
-                        responder:        httpmock.NewStringResponder(http.StatusBadRequest, `{}`),
-                        expectedResponse: nil,
-                        expectedError:    fmt.Errorf("apiai: wops something happens because status code is 400"),
-                },
-        }
+			expectedResponse: &Context{
+				Name: "Coffee time",
+				Params: []ContextParameter{
+					{
+						Name:  "type-1",
+						Value: "long",
+					},
+					{
+						Name:  "type-2",
+						Value: "short",
+					},
+					{
+						Name:  "temperature-1",
+						Value: "hot",
+					},
+					{
+						Name:  "temperature-2",
+						Value: "cold",
+					},
+				},
+			},
+			expectedError: nil,
+		}, {
+			description:      "api ai failed with an error 400",
+			responder:        httpmock.NewStringResponder(http.StatusBadRequest, `{}`),
+			expectedResponse: nil,
+			expectedError:    fmt.Errorf("apiai: wops something happens because status code is 400"),
+		},
+	}
 
-        for _, tc := range tests {
-                httpmock.RegisterResponder("GET", c.buildUrl("contexts/"+url.QueryEscape("Coffee time"), map[string]string{
-                        "sessionId": c.config.sessionId,
-                }), tc.responder)
+	for _, tc := range tests {
+		httpmock.RegisterResponder("GET", c.buildUrl("contexts/"+url.QueryEscape("Coffee time"), map[string]string{
+			"sessionId": c.config.sessionId,
+		}), tc.responder)
 
-                r, err := c.GetContext("Coffee time")
+		r, err := c.GetContext("Coffee time")
 
-                assert.Equal(r, tc.expectedResponse, tc.description)
-                assert.Equal(err, tc.expectedError, tc.description)
+		assert.Equal(r, tc.expectedResponse, tc.description)
+		assert.Equal(err, tc.expectedError, tc.description)
 
-                httpmock.Reset()
-        }
+		httpmock.Reset()
+	}
 }
 
 func TestCreateContext(t *testing.T) {
-        var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
-        assert := assert.New(t)
-        httpmock.Activate()
-        defer httpmock.DeactivateAndReset()
+	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	assert := assert.New(t)
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
 
-        tests := []struct {
-                description      string
-                responder        httpmock.Responder
-                expectedResponse *Context
-                expectedError    error
-        }{
-                {
-                        description:   "api ai success, no errors",
-                        responder:     httpmock.NewStringResponder(200, `{}`),
-                        expectedError: nil,
-                }, {
-                        description:   "api ai failed with an error 400",
-                        responder:     httpmock.NewStringResponder(http.StatusBadRequest, `{}`),
-                        expectedError: fmt.Errorf("apiai: wops something happens because status code is 400"),
-                },
-        }
+	tests := []struct {
+		description      string
+		responder        httpmock.Responder
+		expectedResponse *Context
+		expectedError    error
+	}{
+		{
+			description:   "api ai success, no errors",
+			responder:     httpmock.NewStringResponder(200, `{}`),
+			expectedError: nil,
+		}, {
+			description:   "api ai failed with an error 400",
+			responder:     httpmock.NewStringResponder(http.StatusBadRequest, `{}`),
+			expectedError: fmt.Errorf("apiai: wops something happens because status code is 400"),
+		},
+	}
 
-        for _, tc := range tests {
-                httpmock.RegisterResponder("POST", c.buildUrl("contexts", map[string]string{
-                        "sessionId": c.config.sessionId,
-                }), tc.responder)
+	for _, tc := range tests {
+		httpmock.RegisterResponder("POST", c.buildUrl("contexts", map[string]string{
+			"sessionId": c.config.sessionId,
+		}), tc.responder)
 
-                err := c.CreateContext(Context{
-                        Name: "Coffee time",
-                        Params: []ContextParameter{
-                                {
-                                        Name:  "type-1",
-                                        Value: "long",
-                                },
-                                {
-                                        Name:  "type-2",
-                                        Value: "short",
-                                },
-                                {
-                                        Name:  "temperature-1",
-                                        Value: "hot",
-                                },
-                                {
-                                        Name:  "temperature-2",
-                                        Value: "cold",
-                                },
-                        },
-                })
+		err := c.CreateContext(Context{
+			Name: "Coffee time",
+			Params: []ContextParameter{
+				{
+					Name:  "type-1",
+					Value: "long",
+				},
+				{
+					Name:  "type-2",
+					Value: "short",
+				},
+				{
+					Name:  "temperature-1",
+					Value: "hot",
+				},
+				{
+					Name:  "temperature-2",
+					Value: "cold",
+				},
+			},
+		})
 
-                assert.Equal(err, tc.expectedError, tc.description)
+		assert.Equal(err, tc.expectedError, tc.description)
 
-                httpmock.Reset()
-        }
+		httpmock.Reset()
+	}
 }
 
 func TestDeleteContexts(t *testing.T) {
-        var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
-        assert := assert.New(t)
-        httpmock.Activate()
-        defer httpmock.DeactivateAndReset()
+	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	assert := assert.New(t)
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
 
-        tests := []struct {
-                description   string
-                responder     httpmock.Responder
-                expectedError error
-        }{
-                {
-                        description:   "api ai success, no errors",
-                        responder:     httpmock.NewStringResponder(200, `{}`),
-                        expectedError: nil,
-                }, {
-                        description:   "api ai failed with an error 400",
-                        responder:     httpmock.NewStringResponder(http.StatusBadRequest, `{}`),
-                        expectedError: fmt.Errorf("apiai: wops something happens because status code is 400"),
-                },
-        }
+	tests := []struct {
+		description   string
+		responder     httpmock.Responder
+		expectedError error
+	}{
+		{
+			description:   "api ai success, no errors",
+			responder:     httpmock.NewStringResponder(200, `{}`),
+			expectedError: nil,
+		}, {
+			description:   "api ai failed with an error 400",
+			responder:     httpmock.NewStringResponder(http.StatusBadRequest, `{}`),
+			expectedError: fmt.Errorf("apiai: wops something happens because status code is 400"),
+		},
+	}
 
-        for _, tc := range tests {
-                httpmock.RegisterResponder("DELETE", c.buildUrl("contexts", map[string]string{
-                        "sessionId": c.config.sessionId,
-                }), tc.responder)
+	for _, tc := range tests {
+		httpmock.RegisterResponder("DELETE", c.buildUrl("contexts", map[string]string{
+			"sessionId": c.config.sessionId,
+		}), tc.responder)
 
-                err := c.DeleteContexts()
+		err := c.DeleteContexts()
 
-                assert.Equal(err, tc.expectedError, tc.description)
+		assert.Equal(err, tc.expectedError, tc.description)
 
-                httpmock.Reset()
-        }
+		httpmock.Reset()
+	}
 }
 
 func TestDeleteContext(t *testing.T) {
-        var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
-        assert := assert.New(t)
-        httpmock.Activate()
-        defer httpmock.DeactivateAndReset()
+	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	assert := assert.New(t)
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
 
-        tests := []struct {
-                description   string
-                responder     httpmock.Responder
-                expectedError error
-        }{
-                {
-                        description:   "api ai success, no errors",
-                        responder:     httpmock.NewStringResponder(200, `{}`),
-                        expectedError: nil,
-                }, {
-                        description:   "api ai failed with an error 400",
-                        responder:     httpmock.NewStringResponder(http.StatusBadRequest, `{}`),
-                        expectedError: fmt.Errorf("apiai: wops something happens because status code is 400"),
-                },
-        }
+	tests := []struct {
+		description   string
+		responder     httpmock.Responder
+		expectedError error
+	}{
+		{
+			description:   "api ai success, no errors",
+			responder:     httpmock.NewStringResponder(200, `{}`),
+			expectedError: nil,
+		}, {
+			description:   "api ai failed with an error 400",
+			responder:     httpmock.NewStringResponder(http.StatusBadRequest, `{}`),
+			expectedError: fmt.Errorf("apiai: wops something happens because status code is 400"),
+		},
+	}
 
-        for _, tc := range tests {
-                httpmock.RegisterResponder("DELETE", c.buildUrl("contexts/"+url.QueryEscape("Coffee time"), map[string]string{
-                        "sessionId": c.config.sessionId,
-                }), tc.responder)
+	for _, tc := range tests {
+		httpmock.RegisterResponder("DELETE", c.buildUrl("contexts/"+url.QueryEscape("Coffee time"), map[string]string{
+			"sessionId": c.config.sessionId,
+		}), tc.responder)
 
-                err := c.DeleteContext("Coffee time")
+		err := c.DeleteContext("Coffee time")
 
-                assert.Equal(err, tc.expectedError, tc.description)
+		assert.Equal(err, tc.expectedError, tc.description)
 
-                httpmock.Reset()
-        }
+		httpmock.Reset()
+	}
 }
