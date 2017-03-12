@@ -10,7 +10,7 @@ See the [docs](https://docs.api.ai/docs) for more information.
 ## Installation
 
 ```bash
-go get marcossegovia/apiai-go
+go get github.com/marcossegovia/apiai-go
 ```
 
 ## Usage
