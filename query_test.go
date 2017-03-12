@@ -11,7 +11,10 @@ import (
 )
 
 func TestQuery(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()

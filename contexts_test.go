@@ -11,7 +11,10 @@ import (
 )
 
 func TestGetContexts(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -120,7 +123,10 @@ func TestGetContexts(t *testing.T) {
 }
 
 func TestGetContext(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -199,7 +205,10 @@ func TestGetContext(t *testing.T) {
 }
 
 func TestCreateContext(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -255,7 +264,10 @@ func TestCreateContext(t *testing.T) {
 }
 
 func TestDeleteContexts(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -290,7 +302,10 @@ func TestDeleteContexts(t *testing.T) {
 }
 
 func TestDeleteContext(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()

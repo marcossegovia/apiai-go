@@ -10,7 +10,10 @@ import (
 )
 
 func TestGetEntities(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -73,7 +76,10 @@ func TestGetEntities(t *testing.T) {
 }
 
 func TestGetEntity(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -147,7 +153,10 @@ func TestGetEntity(t *testing.T) {
 }
 
 func TestCreateEntity(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -205,7 +214,10 @@ func TestCreateEntity(t *testing.T) {
 }
 
 func TestAddEntries(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -250,7 +262,10 @@ func TestAddEntries(t *testing.T) {
 }
 
 func TestUpdateEntities(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -302,7 +317,10 @@ func TestUpdateEntities(t *testing.T) {
 }
 
 func TestUpdateEntity(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -352,7 +370,10 @@ func TestUpdateEntity(t *testing.T) {
 }
 
 func TestUpdateEntries(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -399,7 +420,10 @@ func TestUpdateEntries(t *testing.T) {
 }
 
 func TestDeleteEntity(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -432,7 +456,10 @@ func TestDeleteEntity(t *testing.T) {
 }
 
 func TestDeleteEntries(t *testing.T) {
-	var c = NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{token: "fakeToken", sessionId: "123454321"})
+	if err != nil {
+		t.FailNow()
+	}
 	assert := assert.New(t)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()

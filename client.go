@@ -49,15 +49,15 @@ type Client interface {
 	GetIntents() ([]IntentDescription, error)
 }
 
-func NewClient(conf *ClientConfig) *ApiClient {
+func NewClient(conf *ClientConfig) (*ApiClient, error) {
 	if conf.token == "" {
-		fmt.Errorf("%v", "You have to provide a token")
+		return nil, fmt.Errorf("%v", "You have to provide a token")
 	}
 	if conf.sessionId == "" {
-		fmt.Errorf("%v", "You have to provide a session id")
+		return nil, fmt.Errorf("%v", "You have to provide a session id")
 	}
 	if len(conf.sessionId) > 36 {
-		fmt.Errorf("%v", "You have to provide a valid session id, no longer than 36 symbols")
+		return nil, fmt.Errorf("%v", "You have to provide a valid session id, no longer than 36 symbols")
 	}
 	if conf.version == "" {
 		conf.version = defaultVersion
@@ -69,13 +69,13 @@ func NewClient(conf *ClientConfig) *ApiClient {
 		conf.speechLang = defaultSpeechLang
 	}
 	if !languageAvailable(conf.queryLang, queryLang) {
-		fmt.Errorf("%v", "You have to provide a valid query language, see https://docs.api.ai/docs/languages")
+		return nil, fmt.Errorf("%v", "You have to provide a valid query language, see https://docs.api.ai/docs/languages")
 	}
 	if !languageAvailable(conf.speechLang, speechLang) {
-		fmt.Errorf("%v", "You have to provide a valid speech language, see https://docs.api.ai/docs/tts#headers")
+		return nil, fmt.Errorf("%v", "You have to provide a valid speech language, see https://docs.api.ai/docs/tts#headers")
 	}
 
-	return &ApiClient{conf}
+	return &ApiClient{conf}, nil
 }
 
 func languageAvailable(inputLang string, languages []string) bool {
