@@ -1,6 +1,8 @@
 # Go SDK for api.ai
 [![Go Report Card](https://goreportcard.com/badge/github.com/marcossegovia/apiai-go)](https://goreportcard.com/report/github.com/marcossegovia/apiai-go)
 [![GoDoc](https://godoc.org/github.com/marcossegovia/apiai-go?status.svg)](https://godoc.org/github.com/marcossegovia/apiai-go)
+[![Build Status](https://travis-ci.org/marcossegovia/apiai-go.svg?branch=master)](https://travis-ci.org/marcossegovia/apiai-go)
+[![codecov](https://codecov.io/gh/marcossegovia/apiai-go/branch/master/graph/badge.svg)](https://codecov.io/gh/marcossegovia/apiai-go)
 
 This library allows you to integrate Api.ai natural language processing service with your Go application.
 See the [docs](https://docs.api.ai/docs) for more information.
