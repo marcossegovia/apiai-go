@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/marcossegovia/apiai-go/branch/master/graph/badge.svg)](https://codecov.io/gh/marcossegovia/apiai-go)
 
 This library allows you to integrate Api.ai natural language processing service with your Go application.
-See the [docs](https://docs.api.ai/docs) for more information.
+For more information see the [docs](https://docs.api.ai/docs).
 
 ## Installation
 
@@ -23,23 +23,23 @@ import (
 )
 
 func main() {
-        client, err := apiai.NewClient(
-                &ClientConfig{
-                        token:      "YOUR-API-AI-TOKEN",
-                        sessionId:  "YOUR_USER_SESSION_ID",
-                        queryLang:  "en",    //Default en
-                        speechLang: "en-US", //Default en-US
-                },
-        )
-        if err != nil{
-                fmt.Printf("%v", err)
-        }
-
-        qr, err := client.Query(Query{Query: []string{"My name is Marcos and I live in Barcelona"}})
-        if err != nil {
-                fmt.Printf("%v", err)
-        }
-        fmt.Printf("%v", qr.Result.Fulfillment.Speech)
+    client, err := apiai.NewClient(
+        &apiai.ClientConfig{
+            Token:      "YOUR-API-AI-TOKEN",
+            SessionId:  "YOUR_USER_SESSION_ID",
+            QueryLang:  "en",    //Default en
+            SpeechLang: "en-US", //Default en-US
+        },
+    )
+    if err != nil {
+        fmt.Printf("%v", err)
+    }
+    
+    qr, err := client.Query(apiai.Query{Query: []string{"My name is Marcos and I live in Barcelona"}})
+    if err != nil {
+        fmt.Printf("%v", err)
+    }
+    fmt.Printf("%v", qr.Result.Fulfillment.Speech)
 }
 ```
 ## Bugs & Issues
