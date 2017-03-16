@@ -27,7 +27,7 @@ type Query struct {
 	Query           []string            `json:"query"`
 	Event           Event               `json:"event"`
 	Version         string              `json:"-"`
-	SessionId       string              `json:"SessionId"`
+	SessionId       string              `json:"sessionId"`
 	Language        string              `json:"lang"`
 	Contexts        []Context           `json:"contexts"`
 	ResetContexts   bool                `json:"resetContexts"`
