@@ -95,7 +95,7 @@ type QueryResponse struct {
 	Language  string    `json:"lang"`
 	Result    Result    `json:"result"`
 	Status    Status    `json:"status"`
-	SessionId string    `json:"SessionId"`
+	SessionId string    `json:"sessionId"`
 }
 
 func (c *ApiClient) Query(q Query) (*QueryResponse, error) {
