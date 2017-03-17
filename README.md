@@ -7,6 +7,8 @@
 This library allows you to integrate Api.ai natural language processing service with your Go application.
 For more information see the [docs](https://docs.api.ai/docs).
 
+We encourage you to follow this official guide to [get started in 5 steps](https://docs.api.ai/docs/get-started) before proceeding. 
+
 ## Installation
 
 ```bash
