@@ -34,7 +34,7 @@ type IntentParameter struct {
 type IntentResponse struct {
 	Action           string            `json:"action"`
 	ResetContexts    bool              `json:"resetContexts"`
-	AffectedContexts []Context         `json:"resetContexts"`
+	AffectedContexts []Context         `json:"affectedContexts"`
 	Params           []IntentParameter `json:"parameters"`
 	Messages         []Message         `json:"messages"`
 }

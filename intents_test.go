@@ -337,7 +337,7 @@ func TestGetIntent(t *testing.T) {
 					{
 						ResetContexts:    false,
 						Action:           "greetings",
-						AffectedContexts: nil,
+						AffectedContexts: []Context{},
 						Params: []IntentParameter{
 							{
 								Required:     true,
