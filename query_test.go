@@ -36,9 +36,7 @@ func TestQuery(t *testing.T) {
     "resolvedQuery": "my name is Marcos and I live in Barcelona",
     "action": "greetings",
     "actionIncomplete": false,
-		"parameters": {
-			"name": "Marcos",
-		},
+		"parameters": { "name": "Marcos" },
     "contexts": [],
     "metadata": {
       "intentId": "a123a123",
