@@ -78,15 +78,15 @@ type Status struct {
 }
 
 type Result struct {
-	Source           string           `json:"source"`
-	ResolvedQuery    string           `json:"resolvedQuery"`
-	Action           string           `json:"action"`
-	ActionIncomplete bool             `json:"actionIncomplete"`
-	Params           ContextParameter `json:"parameters"`
-	Contexts         []Context        `json:"contexts"`
-	Fulfillment      Fulfilment       `json:"fulfillment"`
-	Score            float64          `json:"score"`
-	Metadata         Metadata         `json:"metadata"`
+	Source           string            `json:"source"`
+	ResolvedQuery    string            `json:"resolvedQuery"`
+	Action           string            `json:"action"`
+	ActionIncomplete bool              `json:"actionIncomplete"`
+	Params           map[string]string `json:"parameters"`
+	Contexts         []Context         `json:"contexts"`
+	Fulfillment      Fulfilment        `json:"fulfillment"`
+	Score            float64           `json:"score"`
+	Metadata         Metadata          `json:"metadata"`
 }
 
 type QueryResponse struct {
