@@ -29,73 +29,31 @@ func TestGetContexts(t *testing.T) {
 			description: "api ai success, no errors",
 			responder: httpmock.NewStringResponder(200, `[
 {
-  "name": "Play game",
-  "parameters": [
-    {
-      "name": "option-1",
-      "value": "yes"
-    },
-    {
-      "name": "option-2",
-      "value": "no"
-    }
-  ]
+ "name": "Play game",
+ "parameters": {
+  "any": "value",
+  "number": "1"
+ }
 },
 {
-  "name": "Coffee time",
-  "parameters": [
-    {
-      "name": "type-1",
-      "value": "long"
-    },
-    {
-      "name": "type-2",
-      "value": "short"
-    },
-    {
-      "name": "temperature-1",
-      "value": "hot"
-    },
-    {
-      "name": "temperature-2",
-      "value": "cold"
-    }
-  ]
+ "name": "Coffee time",
+ "parameters": {
+  "temperature": "cold"
+ }
 }
 ]`),
 			expectedResponse: []Context{
 				{
 					Name: "Play game",
-					Params: []ContextParameter{
-						{
-							Name:  "option-1",
-							Value: "yes",
-						},
-						{
-							Name:  "option-2",
-							Value: "no",
-						},
+					Params: map[string]string{
+						"any":    "value",
+						"number": "1",
 					},
 				},
 				{
 					Name: "Coffee time",
-					Params: []ContextParameter{
-						{
-							Name:  "type-1",
-							Value: "long",
-						},
-						{
-							Name:  "type-2",
-							Value: "short",
-						},
-						{
-							Name:  "temperature-1",
-							Value: "hot",
-						},
-						{
-							Name:  "temperature-2",
-							Value: "cold",
-						},
+					Params: map[string]string{
+						"temperature": "cold",
 					},
 				},
 			},
@@ -141,44 +99,20 @@ func TestGetContext(t *testing.T) {
 			description: "api ai success, no errors",
 			responder: httpmock.NewStringResponder(200, `{
   "name": "Coffee time",
-  "parameters": [
-    {
-      "name": "type-1",
-      "value": "long"
-    },
-    {
-      "name": "type-2",
-      "value": "short"
-    },
-    {
-      "name": "temperature-1",
-      "value": "hot"
-    },
-    {
-      "name": "temperature-2",
-      "value": "cold"
-    }
-  ]
+  "parameters": {
+   "type-1": "long",
+   "type-2": "short",
+   "temperature-1": "hot",
+   "temperature-2": "cold"
+  }
 }`),
 			expectedResponse: &Context{
 				Name: "Coffee time",
-				Params: []ContextParameter{
-					{
-						Name:  "type-1",
-						Value: "long",
-					},
-					{
-						Name:  "type-2",
-						Value: "short",
-					},
-					{
-						Name:  "temperature-1",
-						Value: "hot",
-					},
-					{
-						Name:  "temperature-2",
-						Value: "cold",
-					},
+				Params: map[string]string{
+					"type-1":        "long",
+					"type-2":        "short",
+					"temperature-1": "hot",
+					"temperature-2": "cold",
 				},
 			},
 			expectedError: nil,
@@ -237,23 +171,11 @@ func TestCreateContext(t *testing.T) {
 
 		err := c.CreateContext(Context{
 			Name: "Coffee time",
-			Params: []ContextParameter{
-				{
-					Name:  "type-1",
-					Value: "long",
-				},
-				{
-					Name:  "type-2",
-					Value: "short",
-				},
-				{
-					Name:  "temperature-1",
-					Value: "hot",
-				},
-				{
-					Name:  "temperature-2",
-					Value: "cold",
-				},
+			Params: map[string]string{
+				"type-1":        "long",
+				"type-2":        "short",
+				"temperature-1": "hot",
+				"temperature-2": "cold",
 			},
 		})
 
