@@ -8,15 +8,10 @@ import (
 	"net/url"
 )
 
-type ContextParameter struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
-}
-
 type Context struct {
-	Name     string             `json:"name"`
-	Lifespan int                `json:"lifespan"`
-	Params   []ContextParameter `json:"parameters"`
+	Name     string            `json:"name"`
+	Lifespan int               `json:"lifespan"`
+	Params   map[string]string `json:"parameters"`
 }
 
 func (c *ApiClient) GetContexts() ([]Context, error) {
