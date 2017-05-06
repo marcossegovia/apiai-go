@@ -28,7 +28,6 @@ func main() {
     client, err := apiai.NewClient(
         &apiai.ClientConfig{
             Token:      "YOUR-API-AI-TOKEN",
-            SessionId:  "YOUR_USER_SESSION_ID",
             QueryLang:  "en",    //Default en
             SpeechLang: "en-US", //Default en-US
         },
@@ -36,8 +35,8 @@ func main() {
     if err != nil {
         fmt.Printf("%v", err)
     }
-    
-    qr, err := client.Query(apiai.Query{Query: []string{"My name is Marcos and I live in Barcelona"}})
+    //Set the query string and your current user identifier.
+    qr, err := client.Query(apiai.Query{Query: []string{"My name is Marcos and I live in Barcelona"}, SessionId: "123454321"})
     if err != nil {
         fmt.Printf("%v", err)
     }

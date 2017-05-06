@@ -15,7 +15,6 @@ var speechLang = []string{"en-US", "en-AU", "en-CA", "en-GB", "en-IN", "ru-RU", 
 
 type ClientConfig struct {
 	Token      string //a9a9a9a9a9a9aa9a9a9a9a9a9a9a9a9a
-	SessionId  string
 	Version    string //YYYYMMDD
 	QueryLang  string
 	SpeechLang string
@@ -52,12 +51,6 @@ type Client interface {
 func NewClient(conf *ClientConfig) (*ApiClient, error) {
 	if conf.Token == "" {
 		return nil, fmt.Errorf("%v", "You have to provide a Token")
-	}
-	if conf.SessionId == "" {
-		return nil, fmt.Errorf("%v", "You have to provide a session id")
-	}
-	if len(conf.SessionId) > 36 {
-		return nil, fmt.Errorf("%v", "You have to provide a valid session id, no longer than 36 symbols")
 	}
 	if conf.Version == "" {
 		conf.Version = defaultVersion

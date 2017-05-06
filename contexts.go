@@ -14,9 +14,9 @@ type Context struct {
 	Params   map[string]string `json:"parameters"`
 }
 
-func (c *ApiClient) GetContexts() ([]Context, error) {
+func (c *ApiClient) GetContexts(sessionId string) ([]Context, error) {
 	req, err := http.NewRequest("GET", c.buildUrl("contexts", map[string]string{
-		"SessionId": c.config.SessionId,
+		"sessionId": sessionId,
 	}), nil)
 	if err != nil {
 		return nil, err
@@ -46,9 +46,9 @@ func (c *ApiClient) GetContexts() ([]Context, error) {
 	}
 }
 
-func (c *ApiClient) GetContext(name string) (*Context, error) {
+func (c *ApiClient) GetContext(name, sessionId string) (*Context, error) {
 	req, err := http.NewRequest("GET", c.buildUrl("contexts/"+url.QueryEscape(name), map[string]string{
-		"SessionId": c.config.SessionId,
+		"sessionId": sessionId,
 	}), nil)
 	if err != nil {
 		return nil, err
@@ -78,7 +78,7 @@ func (c *ApiClient) GetContext(name string) (*Context, error) {
 	}
 }
 
-func (c *ApiClient) CreateContext(context Context) error {
+func (c *ApiClient) CreateContext(context Context, sessionId string) error {
 	body := new(bytes.Buffer)
 	err := json.NewEncoder(body).Encode(context)
 	if err != nil {
@@ -86,7 +86,7 @@ func (c *ApiClient) CreateContext(context Context) error {
 	}
 
 	req, err := http.NewRequest("POST", c.buildUrl("contexts", map[string]string{
-		"SessionId": c.config.SessionId,
+		"sessionId": sessionId,
 	}), body)
 	if err != nil {
 		return err
@@ -110,9 +110,9 @@ func (c *ApiClient) CreateContext(context Context) error {
 	}
 }
 
-func (c *ApiClient) DeleteContexts() error {
+func (c *ApiClient) DeleteContexts(sessionId string) error {
 	req, err := http.NewRequest("DELETE", c.buildUrl("contexts", map[string]string{
-		"SessionId": c.config.SessionId,
+		"sessionId": sessionId,
 	}), nil)
 	if err != nil {
 		return err
@@ -136,9 +136,9 @@ func (c *ApiClient) DeleteContexts() error {
 	}
 }
 
-func (c *ApiClient) DeleteContext(name string) error {
+func (c *ApiClient) DeleteContext(name, sessionId string) error {
 	req, err := http.NewRequest("DELETE", c.buildUrl("contexts/"+url.QueryEscape(name), map[string]string{
-		"SessionId": c.config.SessionId,
+		"sessionId": sessionId,
 	}), nil)
 	if err != nil {
 		return err

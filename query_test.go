@@ -11,7 +11,7 @@ import (
 )
 
 func TestQuery(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -59,7 +59,7 @@ func TestQuery(t *testing.T) {
     "code": 200,
     "errorType": "success"
   },
-  "SessionId": "123454321"
+  "sessionId": "123454321"
 }`),
 			expectedResponse: &QueryResponse{
 				Id:        "b340a1f7-abee-4e13-9bdd-5e8938a48b7d",
@@ -100,7 +100,7 @@ func TestQuery(t *testing.T) {
 	for _, tc := range tests {
 		httpmock.RegisterResponder("POST", c.buildUrl("query", nil), tc.responder)
 
-		r, err := c.Query(Query{Query: []string{"my name is Marcos and I live in Barcelona"}})
+		r, err := c.Query(Query{Query: []string{"my name is Marcos and I live in Barcelona"}, SessionId: "123454321"})
 
 		assert.Equal(r, tc.expectedResponse, tc.description)
 		assert.Equal(err, tc.expectedError, tc.description)

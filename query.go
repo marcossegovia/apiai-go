@@ -100,7 +100,6 @@ type QueryResponse struct {
 
 func (c *ApiClient) Query(q Query) (*QueryResponse, error) {
 	q.Version = c.config.Version
-	q.SessionId = c.config.SessionId
 	q.Language = c.config.QueryLang
 	body := new(bytes.Buffer)
 	err := json.NewEncoder(body).Encode(q)

@@ -10,7 +10,7 @@ import (
 )
 
 func TestGetEntities(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -76,7 +76,7 @@ func TestGetEntities(t *testing.T) {
 }
 
 func TestGetEntity(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -153,7 +153,7 @@ func TestGetEntity(t *testing.T) {
 }
 
 func TestCreateEntity(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -214,7 +214,7 @@ func TestCreateEntity(t *testing.T) {
 }
 
 func TestAddEntries(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -262,7 +262,7 @@ func TestAddEntries(t *testing.T) {
 }
 
 func TestUpdateEntities(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -317,7 +317,7 @@ func TestUpdateEntities(t *testing.T) {
 }
 
 func TestUpdateEntity(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -370,7 +370,7 @@ func TestUpdateEntity(t *testing.T) {
 }
 
 func TestUpdateEntries(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -420,7 +420,7 @@ func TestUpdateEntries(t *testing.T) {
 }
 
 func TestDeleteEntity(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -456,7 +456,7 @@ func TestDeleteEntity(t *testing.T) {
 }
 
 func TestDeleteEntries(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}

@@ -11,7 +11,7 @@ import (
 )
 
 func TestGetContexts(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -68,10 +68,10 @@ func TestGetContexts(t *testing.T) {
 
 	for _, tc := range tests {
 		httpmock.RegisterResponder("GET", c.buildUrl("contexts", map[string]string{
-			"SessionId": c.config.SessionId,
+			"sessionId": "123454321",
 		}), tc.responder)
 
-		r, err := c.GetContexts()
+		r, err := c.GetContexts("123454321")
 
 		assert.Equal(r, tc.expectedResponse, tc.description)
 		assert.Equal(err, tc.expectedError, tc.description)
@@ -81,7 +81,7 @@ func TestGetContexts(t *testing.T) {
 }
 
 func TestGetContext(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -126,10 +126,10 @@ func TestGetContext(t *testing.T) {
 
 	for _, tc := range tests {
 		httpmock.RegisterResponder("GET", c.buildUrl("contexts/"+url.QueryEscape("Coffee time"), map[string]string{
-			"SessionId": c.config.SessionId,
+			"sessionId": "123454321",
 		}), tc.responder)
 
-		r, err := c.GetContext("Coffee time")
+		r, err := c.GetContext("Coffee time", "123454321")
 
 		assert.Equal(r, tc.expectedResponse, tc.description)
 		assert.Equal(err, tc.expectedError, tc.description)
@@ -139,7 +139,7 @@ func TestGetContext(t *testing.T) {
 }
 
 func TestCreateContext(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -166,7 +166,7 @@ func TestCreateContext(t *testing.T) {
 
 	for _, tc := range tests {
 		httpmock.RegisterResponder("POST", c.buildUrl("contexts", map[string]string{
-			"SessionId": c.config.SessionId,
+			"sessionId": "123454321",
 		}), tc.responder)
 
 		err := c.CreateContext(Context{
@@ -177,7 +177,7 @@ func TestCreateContext(t *testing.T) {
 				"temperature-1": "hot",
 				"temperature-2": "cold",
 			},
-		})
+		}, "123454321")
 
 		assert.Equal(err, tc.expectedError, tc.description)
 
@@ -186,7 +186,7 @@ func TestCreateContext(t *testing.T) {
 }
 
 func TestDeleteContexts(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -212,10 +212,10 @@ func TestDeleteContexts(t *testing.T) {
 
 	for _, tc := range tests {
 		httpmock.RegisterResponder("DELETE", c.buildUrl("contexts", map[string]string{
-			"SessionId": c.config.SessionId,
+			"sessionId": "123454321",
 		}), tc.responder)
 
-		err := c.DeleteContexts()
+		err := c.DeleteContexts("123454321")
 
 		assert.Equal(err, tc.expectedError, tc.description)
 
@@ -224,7 +224,7 @@ func TestDeleteContexts(t *testing.T) {
 }
 
 func TestDeleteContext(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -250,10 +250,10 @@ func TestDeleteContext(t *testing.T) {
 
 	for _, tc := range tests {
 		httpmock.RegisterResponder("DELETE", c.buildUrl("contexts/"+url.QueryEscape("Coffee time"), map[string]string{
-			"SessionId": c.config.SessionId,
+			"sessionId": "123454321",
 		}), tc.responder)
 
-		err := c.DeleteContext("Coffee time")
+		err := c.DeleteContext("Coffee time", "123454321")
 
 		assert.Equal(err, tc.expectedError, tc.description)
 
