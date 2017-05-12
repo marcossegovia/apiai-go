@@ -10,7 +10,7 @@ import (
 )
 
 func TestGetIntents(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -172,7 +172,7 @@ func TestGetIntents(t *testing.T) {
 }
 
 func TestGetIntent(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -390,7 +390,7 @@ func TestGetIntent(t *testing.T) {
 }
 
 func TestCreateIntent(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -521,7 +521,7 @@ func TestCreateIntent(t *testing.T) {
 }
 
 func TestUpdateIntent(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
@@ -640,7 +640,7 @@ func TestUpdateIntent(t *testing.T) {
 }
 
 func TestDeleteIntent(t *testing.T) {
-	c, err := NewClient(&ClientConfig{Token: "fakeToken", SessionId: "123454321"})
+	c, err := NewClient(&ClientConfig{Token: "fakeToken"})
 	if err != nil {
 		t.FailNow()
 	}
