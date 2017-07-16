@@ -282,7 +282,7 @@ func TestGetIntent(t *testing.T) {
       ],
       "messages": [
         {
-          "type": 0,
+          "type": "0",
           "speech": "Hi! Nice to meet you, $name! What is your hobby?"
         }
       ]
@@ -357,7 +357,7 @@ func TestGetIntent(t *testing.T) {
 						},
 						Messages: []Message{
 							{
-								Type:   0,
+								Type:   "0",
 								Speech: "Hi! Nice to meet you, $name! What is your hobby?",
 							},
 						},

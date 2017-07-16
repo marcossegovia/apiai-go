@@ -48,7 +48,7 @@ func TestQuery(t *testing.T) {
       "speech": "Hi Marcos! Nice to meet you!",
       "messages": [
         {
-          "type": 0,
+          "type": "0",
           "speech": "Hi Marcos! Nice to meet you!"
         }
       ]
@@ -74,7 +74,7 @@ func TestQuery(t *testing.T) {
 					Fulfillment: Fulfilment{
 						Speech: "Hi Marcos! Nice to meet you!",
 						Messages: []Message{
-							{Type: 0, Speech: "Hi Marcos! Nice to meet you!"},
+							{Type: "0", Speech: "Hi Marcos! Nice to meet you!"},
 						},
 					},
 					Score: 1,
