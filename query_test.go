@@ -36,7 +36,7 @@ func TestQuery(t *testing.T) {
     "resolvedQuery": "my name is Marcos and I live in Barcelona",
     "action": "greetings",
     "actionIncomplete": false,
-    "parameters": { "name": "Marcos" },
+    "parameters": { "name": "Marcos", "height": 1.77 },
     "contexts": [],
     "metadata": {
       "intentId": "a123a123",
@@ -69,7 +69,7 @@ func TestQuery(t *testing.T) {
 					Source:        "agent",
 					ResolvedQuery: "my name is Marcos and I live in Barcelona",
 					Action:        "greetings",
-					Params:        map[string]string{"name": "Marcos"},
+					Params:        map[string]interface{}{"name": "Marcos", "height": 1.77},
 					Contexts:      []Context{},
 					Fulfillment: Fulfilment{
 						Speech: "Hi Marcos! Nice to meet you!",
