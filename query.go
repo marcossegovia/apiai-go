@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -116,6 +117,13 @@ func (c *ApiClient) Query(q Query) (*QueryResponse, error) {
 	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
+	if len(c.config.ProxyURL) > 0 {
+		url, err := url.Parse(c.config.ProxyURL)
+		if err == nil {
+			httpClient.Transport = &http.Transport{Proxy: http.ProxyURL(url)}
+		}
+	}
+
 	resp, err := httpClient.Do(req)
 	if err != nil {
 		return nil, err

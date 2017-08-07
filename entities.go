@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -94,6 +96,7 @@ func (c *ApiClient) CreateEntity(entity Entity) (*CreationResponse, error) {
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Content-type", "application/json; charset=utf-8")
 	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
@@ -123,11 +126,11 @@ func (c *ApiClient) AddEntries(idOrName string, entries []Entry) error {
 	if err != nil {
 		return err
 	}
-
 	req, err := http.NewRequest("POST", c.buildUrl("entities/"+idOrName+"/entries", nil), body)
 	if err != nil {
 		return err
 	}
+	req.Header.Set("Content-type", "application/json; charset=utf-8")
 	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
@@ -141,6 +144,8 @@ func (c *ApiClient) AddEntries(idOrName string, entries []Entry) error {
 	case http.StatusOK:
 		return nil
 	default:
+		body, _ := ioutil.ReadAll(resp.Body)
+		log.Printf("body: %s", body)
 		return fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
 	}
 }
@@ -156,6 +161,7 @@ func (c *ApiClient) UpdateEntities(entities []Entity) error {
 	if err != nil {
 		return err
 	}
+	req.Header.Set("Content-type", "application/json; charset=utf-8")
 	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
@@ -184,6 +190,7 @@ func (c *ApiClient) UpdateEntity(idOrName string, entity Entity) error {
 	if err != nil {
 		return err
 	}
+	req.Header.Set("Content-type", "application/json; charset=utf-8")
 	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
@@ -212,6 +219,7 @@ func (c *ApiClient) UpdateEntries(idOrName string, entries []Entry) error {
 	if err != nil {
 		return err
 	}
+	req.Header.Set("Content-type", "application/json; charset=utf-8")
 	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
@@ -225,6 +233,8 @@ func (c *ApiClient) UpdateEntries(idOrName string, entries []Entry) error {
 	case http.StatusOK:
 		return nil
 	default:
+		body, _ := ioutil.ReadAll(resp.Body)
+		log.Printf("body: %s", body)
 		return fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
 	}
 }
@@ -234,6 +244,7 @@ func (c *ApiClient) DeleteEntity(idOrName string) error {
 	if err != nil {
 		return err
 	}
+	req.Header.Set("Content-type", "application/json; charset=utf-8")
 	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
@@ -261,6 +272,7 @@ func (c *ApiClient) DeleteEntries(idOrName string, entries []string) error {
 	if err != nil {
 		return err
 	}
+	req.Header.Set("Content-type", "application/json; charset=utf-8")
 	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
 	httpClient := http.DefaultClient
