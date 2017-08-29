@@ -18,6 +18,7 @@ type ClientConfig struct {
 	Version    string //YYYYMMDD
 	QueryLang  string
 	SpeechLang string
+	ProxyURL   string
 }
 
 type ApiClient struct {
