@@ -28,31 +28,39 @@ func TestGetContexts(t *testing.T) {
 		{
 			description: "api ai success, no errors",
 			responder: httpmock.NewStringResponder(200, `[
-{
- "name": "Play game",
- "parameters": {
-  "any": "value",
-  "number": "1"
- }
-},
-{
- "name": "Coffee time",
- "parameters": {
-  "temperature": "cold"
- }
-}
-]`),
+			{
+				"name": "Play game",
+				"parameters": {
+					"any": "value",
+					"number": 1.5,
+					"duration": {
+						"amount": 30.0,
+						"units": "min"
+					}
+				}
+			},
+			{
+				"name": "Coffee time",
+				"parameters": {
+					"temperature": "cold"
+				}
+			}
+			]`),
 			expectedResponse: []Context{
 				{
 					Name: "Play game",
-					Params: map[string]string{
+					Params: map[string]interface{}{
 						"any":    "value",
-						"number": "1",
+						"number": 1.5,
+						"duration": map[string]interface{}{
+							"amount": 30.0,
+							"units":  "min",
+						},
 					},
 				},
 				{
 					Name: "Coffee time",
-					Params: map[string]string{
+					Params: map[string]interface{}{
 						"temperature": "cold",
 					},
 				},
@@ -98,17 +106,17 @@ func TestGetContext(t *testing.T) {
 		{
 			description: "api ai success, no errors",
 			responder: httpmock.NewStringResponder(200, `{
-  "name": "Coffee time",
-  "parameters": {
-   "type-1": "long",
-   "type-2": "short",
-   "temperature-1": "hot",
-   "temperature-2": "cold"
-  }
-}`),
+				"name": "Coffee time",
+				"parameters": {
+					"type-1": "long",
+					"type-2": "short",
+					"temperature-1": "hot",
+					"temperature-2": "cold"
+				}
+			}`),
 			expectedResponse: &Context{
 				Name: "Coffee time",
-				Params: map[string]string{
+				Params: map[string]interface{}{
 					"type-1":        "long",
 					"type-2":        "short",
 					"temperature-1": "hot",
@@ -171,7 +179,7 @@ func TestCreateContext(t *testing.T) {
 
 		err := c.CreateContext(Context{
 			Name: "Coffee time",
-			Params: map[string]string{
+			Params: map[string]interface{}{
 				"type-1":        "long",
 				"type-2":        "short",
 				"temperature-1": "hot",

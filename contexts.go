@@ -9,9 +9,9 @@ import (
 )
 
 type Context struct {
-	Name     string            `json:"name"`
-	Lifespan int               `json:"lifespan"`
-	Params   map[string]string `json:"parameters"`
+	Name     string                 `json:"name"`
+	Lifespan int                    `json:"lifespan"`
+	Params   map[string]interface{} `json:"parameters"`
 }
 
 func (c *ApiClient) GetContexts(sessionId string) ([]Context, error) {
