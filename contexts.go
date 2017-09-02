@@ -1,7 +1,6 @@
 package apiai
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -15,18 +14,8 @@ type Context struct {
 }
 
 func (c *ApiClient) GetContexts(sessionId string) ([]Context, error) {
-	req, err := http.NewRequest("GET", c.buildUrl("contexts", map[string]string{
-		"sessionId": sessionId,
-	}), nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Content-type", "application/json; charset=utf-8")
-	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
-	httpClient := http.DefaultClient
-	resp, err := httpClient.Do(req)
+	resp, err := c.getApiaiResponse(http.MethodGet, "contexts", map[string]string{"sessionId": sessionId}, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -42,23 +31,12 @@ func (c *ApiClient) GetContexts(sessionId string) ([]Context, error) {
 		}
 		return contexts, nil
 	default:
-		return nil, fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) GetContext(name, sessionId string) (*Context, error) {
-	req, err := http.NewRequest("GET", c.buildUrl("contexts/"+url.QueryEscape(name), map[string]string{
-		"sessionId": sessionId,
-	}), nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Content-type", "application/json; charset=utf-8")
-	req.Header.Set("Authorization", "Bearer "+c.config.Token)
-
-	httpClient := http.DefaultClient
-	resp, err := httpClient.Do(req)
+	resp, err := c.getApiaiResponse(http.MethodGet, "contexts/"+url.QueryEscape(name), map[string]string{"sessionId": sessionId}, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -74,29 +52,13 @@ func (c *ApiClient) GetContext(name, sessionId string) (*Context, error) {
 		}
 		return context, nil
 	default:
-		return nil, fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) CreateContext(context Context, sessionId string) error {
-	body := new(bytes.Buffer)
-	err := json.NewEncoder(body).Encode(context)
-	if err != nil {
-		return err
-	}
 
-	req, err := http.NewRequest("POST", c.buildUrl("contexts", map[string]string{
-		"sessionId": sessionId,
-	}), body)
-	if err != nil {
-		return err
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Content-type", "application/json; charset=utf-8")
-	req.Header.Set("Authorization", "Bearer "+c.config.Token)
-
-	httpClient := http.DefaultClient
-	resp, err := httpClient.Do(req)
+	resp, err := c.getApiaiResponse(http.MethodPost, "contexts", map[string]string{"sessionId": sessionId}, context)
 	if err != nil {
 		return err
 	}
@@ -106,23 +68,12 @@ func (c *ApiClient) CreateContext(context Context, sessionId string) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) DeleteContexts(sessionId string) error {
-	req, err := http.NewRequest("DELETE", c.buildUrl("contexts", map[string]string{
-		"sessionId": sessionId,
-	}), nil)
-	if err != nil {
-		return err
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Content-type", "application/json; charset=utf-8")
-	req.Header.Set("Authorization", "Bearer "+c.config.Token)
-
-	httpClient := http.DefaultClient
-	resp, err := httpClient.Do(req)
+	resp, err := c.getApiaiResponse(http.MethodDelete, "contexts", map[string]string{"sessionId": sessionId}, nil)
 	if err != nil {
 		return err
 	}
@@ -132,23 +83,13 @@ func (c *ApiClient) DeleteContexts(sessionId string) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) DeleteContext(name, sessionId string) error {
-	req, err := http.NewRequest("DELETE", c.buildUrl("contexts/"+url.QueryEscape(name), map[string]string{
-		"sessionId": sessionId,
-	}), nil)
-	if err != nil {
-		return err
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Content-type", "application/json; charset=utf-8")
-	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
-	httpClient := http.DefaultClient
-	resp, err := httpClient.Do(req)
+	resp, err := c.getApiaiResponse(http.MethodDelete, "contexts/"+url.QueryEscape(name), map[string]string{"sessionId": sessionId}, nil)
 	if err != nil {
 		return err
 	}
@@ -158,6 +99,6 @@ func (c *ApiClient) DeleteContext(name, sessionId string) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }

@@ -1,7 +1,6 @@
 package apiai
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -72,14 +71,8 @@ type IntentDescription struct {
 }
 
 func (c *ApiClient) GetIntents() ([]IntentDescription, error) {
-	req, err := http.NewRequest("GET", c.buildUrl("intents", nil), nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
-	httpClient := http.DefaultClient
-	resp, err := httpClient.Do(req)
+	resp, err := c.getApiaiResponse(http.MethodGet, "intents", nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -95,19 +88,13 @@ func (c *ApiClient) GetIntents() ([]IntentDescription, error) {
 		}
 		return intents, nil
 	default:
-		return nil, fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) GetIntent(id string) (*Intent, error) {
-	req, err := http.NewRequest("GET", c.buildUrl("intents/"+id, nil), nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
-	httpClient := http.DefaultClient
-	resp, err := httpClient.Do(req)
+	resp, err := c.getApiaiResponse(http.MethodGet, "intents/"+id, nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -123,25 +110,13 @@ func (c *ApiClient) GetIntent(id string) (*Intent, error) {
 		}
 		return intent, nil
 	default:
-		return nil, fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) CreateIntent(intent Intent) (*CreationResponse, error) {
-	body := new(bytes.Buffer)
-	err := json.NewEncoder(body).Encode(intent)
-	if err != nil {
-		return nil, err
-	}
 
-	req, err := http.NewRequest("POST", c.buildUrl("intents", nil), body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Authorization", "Bearer "+c.config.Token)
-
-	httpClient := http.DefaultClient
-	resp, err := httpClient.Do(req)
+	resp, err := c.getApiaiResponse(http.MethodPost, "intents", nil, intent)
 	if err != nil {
 		return nil, err
 	}
@@ -157,25 +132,13 @@ func (c *ApiClient) CreateIntent(intent Intent) (*CreationResponse, error) {
 		}
 		return cr, nil
 	default:
-		return nil, fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) UpdateIntent(id string, intent Intent) error {
-	body := new(bytes.Buffer)
-	err := json.NewEncoder(body).Encode(intent)
-	if err != nil {
-		return err
-	}
 
-	req, err := http.NewRequest("PUT", c.buildUrl("intents/"+id, nil), body)
-	if err != nil {
-		return err
-	}
-	req.Header.Set("Authorization", "Bearer "+c.config.Token)
-
-	httpClient := http.DefaultClient
-	resp, err := httpClient.Do(req)
+	resp, err := c.getApiaiResponse(http.MethodPut, "intents/"+id, nil, intent)
 	if err != nil {
 		return err
 	}
@@ -185,19 +148,13 @@ func (c *ApiClient) UpdateIntent(id string, intent Intent) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) DeleteIntent(id string) error {
-	req, err := http.NewRequest("DELETE", c.buildUrl("intents/"+id, nil), nil)
-	if err != nil {
-		return err
-	}
-	req.Header.Set("Authorization", "Bearer "+c.config.Token)
 
-	httpClient := http.DefaultClient
-	resp, err := httpClient.Do(req)
+	resp, err := c.getApiaiResponse(http.MethodDelete, "intents/"+id, nil, nil)
 	if err != nil {
 		return err
 	}
@@ -207,6 +164,6 @@ func (c *ApiClient) DeleteIntent(id string) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
