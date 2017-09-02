@@ -27,7 +27,7 @@ type Entity struct {
 }
 
 func (c *ApiClient) GetEntities() ([]EntityDescription, error) {
-	resp, err := c.getResponseApiai(http.MethodGet, "entities", nil, nil)
+	resp, err := c.getApiaiResponse(http.MethodGet, "entities", nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -43,12 +43,12 @@ func (c *ApiClient) GetEntities() ([]EntityDescription, error) {
 		}
 		return entities, nil
 	default:
-		return nil, fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) GetEntity(idOrName string) (*Entity, error) {
-	resp, err := c.getResponseApiai(http.MethodGet, "entities/"+idOrName, nil, nil)
+	resp, err := c.getApiaiResponse(http.MethodGet, "entities/"+idOrName, nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -64,13 +64,13 @@ func (c *ApiClient) GetEntity(idOrName string) (*Entity, error) {
 		}
 		return entity, nil
 	default:
-		return nil, fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) CreateEntity(entity Entity) (*CreationResponse, error) {
 
-	resp, err := c.getResponseApiai(http.MethodPost, "entities", nil, entity)
+	resp, err := c.getApiaiResponse(http.MethodPost, "entities", nil, entity)
 	if err != nil {
 		return nil, err
 	}
@@ -86,13 +86,13 @@ func (c *ApiClient) CreateEntity(entity Entity) (*CreationResponse, error) {
 		}
 		return cr, nil
 	default:
-		return nil, fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) AddEntries(idOrName string, entries []Entry) error {
 
-	resp, err := c.getResponseApiai(http.MethodPost, "entities/"+idOrName+"/entries", nil, entries)
+	resp, err := c.getApiaiResponse(http.MethodPost, "entities/"+idOrName+"/entries", nil, entries)
 	if err != nil {
 		return err
 	}
@@ -102,13 +102,13 @@ func (c *ApiClient) AddEntries(idOrName string, entries []Entry) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) UpdateEntities(entities []Entity) error {
 
-	resp, err := c.getResponseApiai(http.MethodPut, "entities", nil, entities)
+	resp, err := c.getApiaiResponse(http.MethodPut, "entities", nil, entities)
 	if err != nil {
 		return err
 	}
@@ -118,13 +118,13 @@ func (c *ApiClient) UpdateEntities(entities []Entity) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) UpdateEntity(idOrName string, entity Entity) error {
 
-	resp, err := c.getResponseApiai(http.MethodPut, "entities/"+idOrName, nil, entity)
+	resp, err := c.getApiaiResponse(http.MethodPut, "entities/"+idOrName, nil, entity)
 	if err != nil {
 		return err
 	}
@@ -134,13 +134,13 @@ func (c *ApiClient) UpdateEntity(idOrName string, entity Entity) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) UpdateEntries(idOrName string, entries []Entry) error {
 
-	resp, err := c.getResponseApiai(http.MethodPut, "entities/"+idOrName+"/entries", nil, entries)
+	resp, err := c.getApiaiResponse(http.MethodPut, "entities/"+idOrName+"/entries", nil, entries)
 	if err != nil {
 		return err
 	}
@@ -150,13 +150,13 @@ func (c *ApiClient) UpdateEntries(idOrName string, entries []Entry) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) DeleteEntity(idOrName string) error {
 
-	resp, err := c.getResponseApiai(http.MethodDelete, "entities/"+idOrName, nil, nil)
+	resp, err := c.getApiaiResponse(http.MethodDelete, "entities/"+idOrName, nil, nil)
 	if err != nil {
 		return err
 	}
@@ -166,13 +166,13 @@ func (c *ApiClient) DeleteEntity(idOrName string) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) DeleteEntries(idOrName string, entries []string) error {
 
-	resp, err := c.getResponseApiai(http.MethodDelete, "entities/"+idOrName+"/entries", nil, entries)
+	resp, err := c.getApiaiResponse(http.MethodDelete, "entities/"+idOrName+"/entries", nil, entries)
 	if err != nil {
 		return err
 	}
@@ -182,6 +182,6 @@ func (c *ApiClient) DeleteEntries(idOrName string, entries []string) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }

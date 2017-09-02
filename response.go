@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func (c *ApiClient) getResponseApiai(method string, path string, params map[string]string, body interface{}) (*http.Response, error) {
+func (c *ApiClient) getApiaiResponse(method string, path string, params map[string]string, body interface{}) (*http.Response, error) {
 	buf := new(bytes.Buffer)
 	if body != nil {
 		err := json.NewEncoder(buf).Encode(body)

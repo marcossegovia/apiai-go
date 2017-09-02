@@ -15,7 +15,7 @@ type Context struct {
 
 func (c *ApiClient) GetContexts(sessionId string) ([]Context, error) {
 
-	resp, err := c.getResponseApiai(http.MethodGet, "contexts", map[string]string{"sessionId": sessionId}, nil)
+	resp, err := c.getApiaiResponse(http.MethodGet, "contexts", map[string]string{"sessionId": sessionId}, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -31,12 +31,12 @@ func (c *ApiClient) GetContexts(sessionId string) ([]Context, error) {
 		}
 		return contexts, nil
 	default:
-		return nil, fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) GetContext(name, sessionId string) (*Context, error) {
-	resp, err := c.getResponseApiai(http.MethodGet, "contexts/"+url.QueryEscape(name), map[string]string{"sessionId": sessionId}, nil)
+	resp, err := c.getApiaiResponse(http.MethodGet, "contexts/"+url.QueryEscape(name), map[string]string{"sessionId": sessionId}, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -52,13 +52,13 @@ func (c *ApiClient) GetContext(name, sessionId string) (*Context, error) {
 		}
 		return context, nil
 	default:
-		return nil, fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) CreateContext(context Context, sessionId string) error {
 
-	resp, err := c.getResponseApiai(http.MethodPost, "contexts", map[string]string{"sessionId": sessionId}, context)
+	resp, err := c.getApiaiResponse(http.MethodPost, "contexts", map[string]string{"sessionId": sessionId}, context)
 	if err != nil {
 		return err
 	}
@@ -68,12 +68,12 @@ func (c *ApiClient) CreateContext(context Context, sessionId string) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) DeleteContexts(sessionId string) error {
-	resp, err := c.getResponseApiai(http.MethodDelete, "contexts", map[string]string{"sessionId": sessionId}, nil)
+	resp, err := c.getApiaiResponse(http.MethodDelete, "contexts", map[string]string{"sessionId": sessionId}, nil)
 	if err != nil {
 		return err
 	}
@@ -83,13 +83,13 @@ func (c *ApiClient) DeleteContexts(sessionId string) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) DeleteContext(name, sessionId string) error {
 
-	resp, err := c.getResponseApiai(http.MethodDelete, "contexts/"+url.QueryEscape(name), map[string]string{"sessionId": sessionId}, nil)
+	resp, err := c.getApiaiResponse(http.MethodDelete, "contexts/"+url.QueryEscape(name), map[string]string{"sessionId": sessionId}, nil)
 	if err != nil {
 		return err
 	}
@@ -99,6 +99,6 @@ func (c *ApiClient) DeleteContext(name, sessionId string) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }

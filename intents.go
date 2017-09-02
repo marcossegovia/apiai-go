@@ -72,7 +72,7 @@ type IntentDescription struct {
 
 func (c *ApiClient) GetIntents() ([]IntentDescription, error) {
 
-	resp, err := c.getResponseApiai(http.MethodGet, "intents", nil, nil)
+	resp, err := c.getApiaiResponse(http.MethodGet, "intents", nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -88,13 +88,13 @@ func (c *ApiClient) GetIntents() ([]IntentDescription, error) {
 		}
 		return intents, nil
 	default:
-		return nil, fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) GetIntent(id string) (*Intent, error) {
 
-	resp, err := c.getResponseApiai(http.MethodGet, "intents/"+id, nil, nil)
+	resp, err := c.getApiaiResponse(http.MethodGet, "intents/"+id, nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -110,13 +110,13 @@ func (c *ApiClient) GetIntent(id string) (*Intent, error) {
 		}
 		return intent, nil
 	default:
-		return nil, fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) CreateIntent(intent Intent) (*CreationResponse, error) {
 
-	resp, err := c.getResponseApiai(http.MethodPost, "intents", nil, intent)
+	resp, err := c.getApiaiResponse(http.MethodPost, "intents", nil, intent)
 	if err != nil {
 		return nil, err
 	}
@@ -132,13 +132,13 @@ func (c *ApiClient) CreateIntent(intent Intent) (*CreationResponse, error) {
 		}
 		return cr, nil
 	default:
-		return nil, fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return nil, fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) UpdateIntent(id string, intent Intent) error {
 
-	resp, err := c.getResponseApiai(http.MethodPut, "intents/"+id, nil, intent)
+	resp, err := c.getApiaiResponse(http.MethodPut, "intents/"+id, nil, intent)
 	if err != nil {
 		return err
 	}
@@ -148,13 +148,13 @@ func (c *ApiClient) UpdateIntent(id string, intent Intent) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
 
 func (c *ApiClient) DeleteIntent(id string) error {
 
-	resp, err := c.getResponseApiai(http.MethodDelete, "intents/"+id, nil, nil)
+	resp, err := c.getApiaiResponse(http.MethodDelete, "intents/"+id, nil, nil)
 	if err != nil {
 		return err
 	}
@@ -164,6 +164,6 @@ func (c *ApiClient) DeleteIntent(id string) error {
 	case http.StatusOK:
 		return nil
 	default:
-		return fmt.Errorf(ErrorApiAiRequestMsg, resp.StatusCode)
+		return fmt.Errorf(DefaultErrorMsg, resp.StatusCode)
 	}
 }
