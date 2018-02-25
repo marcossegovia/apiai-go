@@ -67,8 +67,9 @@ type Message struct {
 }
 
 type Fulfilment struct {
-	Speech   string    `json:"speech"`
-	Messages []Message `json:"messages"`
+	Speech      string    `json:"speech"`
+	DisplayText string    `json:"displayText"`
+	Messages    []Message `json:"messages"`
 }
 
 type Status struct {
