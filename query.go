@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"time"
@@ -67,8 +68,9 @@ type Message struct {
 }
 
 type Fulfilment struct {
-	Speech   string    `json:"speech"`
-	Messages []Message `json:"messages"`
+	Speech      string    `json:"speech"`
+	DisplayText string    `json:"displayText"`
+	Messages    []Message `json:"messages"`
 }
 
 type Status struct {
@@ -140,6 +142,7 @@ func (c *ApiClient) Query(q Query) (*QueryResponse, error) {
 		}
 		return response, nil
 	default:
-		return nil, fmt.Errorf("apiai: wops something happens because status code is %v", resp.StatusCode)
+		body, _ := ioutil.ReadAll(resp.Body)
+		return nil, fmt.Errorf("ApiAi Error: %v: %v", resp.StatusCode, string(body))
 	}
 }
